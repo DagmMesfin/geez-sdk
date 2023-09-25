@@ -89,21 +89,12 @@ extension NumberToGeezConvertor on int {
   String _driveGeezRepresentation(List<int> splitedDigits, List componentList) {
     String geezRep = '';
     for (int index = 0, j=0; index < splitedDigits.length; index=index+2, j++) {
-      // Check if the product of the current digit and its corresponding component
-      // is present in the geezNumbers map.
-      if (geezNumbers
-          .containsKey(splitedDigits[index+1] * componentList[j]) && splitedDigits[index]==0) {
-        // Add the Geez representation of the product to the result.
-        geezRep +=
-            geezNumbers[splitedDigits[index+1] * componentList[j]] ?? '';
-      } else {
         // If the product is not in the map, add the individual Geez representations
         // of the digit and its corresponding component to the result.
         String geezNum1 = geezNumbers[splitedDigits[index]] ?? '';
         String geezNum2 = geezNumbers[splitedDigits[index+1]] ?? '';
         String sthGeez = geezNumbers[componentList[j]] ?? '';
         geezRep += geezNum1 + geezNum2 + sthGeez;
-      }
     }
     // Return the final Geez representation of the number.
     return geezRep;
