@@ -56,6 +56,7 @@ extension NumberToGeezConvertor on int {
           digito = digito ~/ 10;
           iter++;
       }
+
       } else if(number == 0 && iter%2 == 1){
         splitedDigits.add(number);
         break;
@@ -96,8 +97,7 @@ extension NumberToGeezConvertor on int {
     String geezRep = '';
     if (geezNumbers.containsKey(splitedDigits[index] * componentList[j])) {
         // Add the Geez representation of the product to the result.
-        geezRep +=
-            geezNumbers[splitedDigits[index] * componentList[j]] ?? '';
+        geezRep += geezNumbers[splitedDigits[index] * componentList[j]] ?? '';
     } else {
     for (int index = 0, j=0; index < splitedDigits.length; index=index+2, j++) {
         // If the product is not in the map, add the individual Geez representations
