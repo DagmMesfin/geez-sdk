@@ -39,13 +39,14 @@ extension NumberToGeezConvertor on int {
   /// Returns a list of individual digits.
   List<int> _splitNumbers(int number) {
     List<int> splitedDigits = [];
-    int iter=1;
-    while (number > 0 || iter%2 == 1) {  //continues one more step ahead than it normally would when the number of digits are odd (so that we can consistently use the components)
+    int iter=0;
+    while (number >= 0) {  //continues one more step ahead than it normally would when the number of digits are odd (so that we can consistently use the components)
       // Get the rightmost two-digits of the number.
+      if(number !=1){
       int digito = number % 100;
 
       // Add the digit to the list keeping their placements (for 26 -> 20 , 6)
-      for(int i=0; (digito>0 || iter%2 == 1); i++){
+      for(int i=0; i<2; i++){
         //gets the individual digits
           int digit = digito%10;
           if(i==1){
@@ -55,7 +56,12 @@ extension NumberToGeezConvertor on int {
           digito = digito ~/ 10;
           iter++;
       }
-      
+      } else if(number == 0 && iter%2 == 1){
+        splitedDigits.add(number);
+        break;
+      } else {
+        break;
+      }
       // Remove the rightmost two-digits from the number.
       number = number ~/ 100;
     }
@@ -88,6 +94,11 @@ extension NumberToGeezConvertor on int {
   /// Returns the Geez numeric representation of the number.
   String _driveGeezRepresentation(List<int> splitedDigits, List componentList) {
     String geezRep = '';
+    if (geezNumbers.containsKey(splitedDigits[index] * componentList[j])) {
+        // Add the Geez representation of the product to the result.
+        geezRep +=
+            geezNumbers[splitedDigits[index] * componentList[j]] ?? '';
+    } else {
     for (int index = 0, j=0; index < splitedDigits.length; index=index+2, j++) {
         // If the product is not in the map, add the individual Geez representations
         // of the digit and its corresponding component to the result.
@@ -95,6 +106,7 @@ extension NumberToGeezConvertor on int {
         String geezNum2 = geezNumbers[splitedDigits[index+1]] ?? '';
         String sthGeez = geezNumbers[componentList[j]] ?? '';
         geezRep += geezNum1 + geezNum2 + sthGeez;
+    }
     }
     // Return the final Geez representation of the number.
     return geezRep;
