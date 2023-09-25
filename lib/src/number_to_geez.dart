@@ -56,15 +56,14 @@ extension NumberToGeezConvertor on int {
           digito = digito ~/ 10;
           iter++;
       }
-
+        // Remove the rightmost two-digits from the number.
+        number = number ~/ 100;
       } else if(number == 0 && iter%2 == 1){
         splitedDigits.add(number);
-        break;
+        number--;
       } else {
-        break;
+        number--;
       }
-      // Remove the rightmost two-digits from the number.
-      number = number ~/ 100;
     }
     // Reverse the list to get the correct order of digits.
     return splitedDigits.reversed.toList();
